@@ -19,10 +19,12 @@
   },
   "homepage": "https://github.com/jackson-elfers/teddy-bear#readme",
   "dependencies": {
+    "connect-timeout": "^1.9.0",
     "dotenv": "^9.0.2",
     "express": "^4.17.1",
     "express-force-https": "^1.0.0",
     "pingmydyno": "^1.5.1",
+    "socket.io": "^4.1.1",
     "uuid": "^8.3.2",
     "ytdl-core": "^4.7.0"
   }

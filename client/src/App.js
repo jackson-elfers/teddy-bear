@@ -2,6 +2,8 @@ import './styles';
 import React, { useState, useEffect, useRef } from "react";
 import axios from "axios";
 import getYouTubeID from "get-youtube-id";
+import io from "socket.io-client";
+const socket = io();
 const { v4: uuid } = require('uuid');
 const heartflakes = require('magic-heartflakes');
 heartflakes();
@@ -21,15 +23,20 @@ function Download(props) {
       if (response.data.error) {
         throw new Error(response.data.error.detail);
       }
-      setLoading(false);
-      setComplete(true);
       setData(response.data.data);
+      console.log(response.data.data);
+      socket.on(`/ready/${response.data.data.media}`, fileCompletion);
     }
     catch(e) {
       setData({}); 
       setComplete(false);
       alert(e.message);
     }
+  }
+
+  async function fileCompletion(data) {
+      setLoading(false);
+      setComplete(true);
   }
 
   if(loading) {
