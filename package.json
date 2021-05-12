@@ -21,6 +21,7 @@
   "dependencies": {
     "dotenv": "^9.0.2",
     "express": "^4.17.1",
+    "pingmydyno": "^1.5.1",
     "uuid": "^8.3.2",
     "ytdl-core": "^4.7.0"
   }

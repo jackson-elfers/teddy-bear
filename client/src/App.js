@@ -75,7 +75,7 @@ function App() {
       <Download api_url={`${process.env.REACT_APP_API}/ytdl/video`}/>
       <h3>Download YouTube Music (mp3):</h3>
       <Download api_url={`${process.env.REACT_APP_API}/ytdl/audio`}/>
-      <a href="https://github.com/jackson-elfers/ytdl-server">
+      <a href="https://github.com/jackson-elfers/teddy-bear">
         Issues? Notify Jackson the Creator
       </a>
     </div>

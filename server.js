@@ -5,6 +5,8 @@ const ytdl = require('ytdl-core');
 const path = require("path");
 const { v4: uuid } = require('uuid');
 const { spawn } = require("child_process");
+const pingmydyno = require("pingmydyno");
+pingmydyno("https://jelfers.herokuapp.com");
 const app = express()
 const port = 5000
 
