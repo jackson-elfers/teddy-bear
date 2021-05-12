@@ -3,6 +3,8 @@ import React, { useState, useEffect, useRef } from "react";
 import axios from "axios";
 import getYouTubeID from "get-youtube-id";
 const { v4: uuid } = require('uuid');
+const heartflakes = require('magic-heartflakes');
+heartflakes();
 
 function Download(props) {
   const [id, setId] = useState(uuid());
@@ -24,6 +26,8 @@ function Download(props) {
       setData(response.data.data);
     }
     catch(e) {
+      setData({}); 
+      setComplete(false);
       alert(e.message);
     }
   }
@@ -78,7 +82,7 @@ function App() {
       <h3>Download YouTube Music (mp3):</h3>
       <Download api_url={`${process.env.REACT_APP_API}/ytdl/audio`}/>
       <a href="https://github.com/jackson-elfers/teddy-bear">
-        Issues? Notify Jackson the Creator
+        Issues? Notify Jackson
       </a>
     </div>
   );
