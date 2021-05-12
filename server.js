@@ -44,6 +44,6 @@ app.get('/ytdl/audio/:_id', (req, res) => {
 });
 
 
-app.listen(port, () => {
+app.listen(process.env.PORT, () => {
   console.log(`PORT: ${process.env.PORT}`)
 })
