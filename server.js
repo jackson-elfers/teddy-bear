@@ -7,11 +7,13 @@ const { v4: uuid } = require('uuid');
 const { spawn } = require("child_process");
 const pingmydyno = require("pingmydyno");
 pingmydyno("https://jelfers.herokuapp.com");
+const secure = require("express-force-https");
 const app = express()
 const port = 5000
 
 app.use(express.static(path.join(process.cwd(), "./client/build")));
 app.use(express.static(path.join(process.cwd(), "./public")));
+app.use(secure);
 
 app.get('/ytdl/video/:_id', (req, res) => {
   const media = `${uuid()}.mp4`;
