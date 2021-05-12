@@ -31,7 +31,9 @@ function Download(props) {
   if(loading) {
     return(
     <div>
-      <img src={"./bonfire.gif"} alt="bonfire loading spinner." />
+      <div className = "box">
+        <p>Processing...</p>
+      </div>
     </div>
     );
   }
