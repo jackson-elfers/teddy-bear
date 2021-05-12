@@ -10,54 +10,25 @@ heartflakes();
 
 function Download(props) {
   const [id, setId] = useState(uuid());
-  const [loading, setLoading] = useState(false);
-  const [complete, setComplete] = useState(false);
+  const [ready, setReady] = useState(false);
   const [data, setData] = useState({});
 
   async function download(e) {
     e.preventDefault();
     const form = document.getElementById(`form${id}`);
-    setLoading(true);
-    try {
-      const response = await axios.get(`${props.api_url}/${getYouTubeID(form.media_id.value)}`);
-      if (response.data.error) {
-        throw new Error(response.data.error.detail);
-      }
-      setData(response.data.data);
-      console.log(response.data.data);
-      socket.on(`/ready/${response.data.data.media}`, fileCompletion);
-    }
-    catch(e) {
-      setData({}); 
-      setComplete(false);
-      alert(e.message);
-    }
+    setData({ url: `${props.api_url}/${getYouTubeID(form.media_id.value)}/${uuid()}.${props.file_type}` });
+    setReady(true);
   }
 
-  async function fileCompletion(data) {
-      setLoading(false);
-      setComplete(true);
-  }
-
-  if(loading) {
-    return(
-    <div>
-      <div className = "box">
-        <p>Processing...</p>
-      </div>
-    </div>
-    );
-  }
-
-  if(complete) {
+  if(ready) {
     return(
     <div>
     <div className = "box">
-      <a href = {`/${data.media}`} download>
+      <a href = {`${data.url}`} download>
        <p>Download Ready! Click to Begin...</p>
       </a>
     </div>
-    <button onClick = {() => { setData({}); setComplete(false); }}>Discard</button>
+    <button onClick = {() => { setData({}); setReady(false); }}>Discard</button>
     </div>
     );
   }
@@ -85,9 +56,9 @@ function App() {
     <div className="App">
       <img src={"./197b365922d1ea3aa1a932ff9bbda4a6.png"} alt="YouTube logo." />
       <h3>Download YouTube Video (mp4):</h3>
-      <Download api_url={`${process.env.REACT_APP_API}/ytdl/video`}/>
+      <Download api_url={`${process.env.REACT_APP_API}/ytdl/video`} file_type = "mp4"/>
       <h3>Download YouTube Music (mp3):</h3>
-      <Download api_url={`${process.env.REACT_APP_API}/ytdl/audio`}/>
+      <Download api_url={`${process.env.REACT_APP_API}/ytdl/audio`} file_type = "mp3"/>
       <a href="https://github.com/jackson-elfers/teddy-bear">
         Issues? Notify Jackson
       </a>

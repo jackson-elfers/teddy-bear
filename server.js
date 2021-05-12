@@ -16,21 +16,11 @@ app.use(express.static(path.join(process.cwd(), "./public")));
 app.use(secure);
 pingmydyno("https://jelfers.herokuapp.com");
 
-app.get('/ytdl/video/:_id', (req, res) => {
-  const io = req.app.get('socketio');
-  const media = `${uuid()}.mp4`;
-  ytdl(req.params._id).pipe(fs.createWriteStream(`./public/${media}`)).on("finish", () => {
-    io.emit(`/ready/${media}`, { data: {}, error: null });
-  })
-  .on("error", (error) => {
-    io.emit(`/ready/${media}`, { data: {}, error: error.message });
-  });
-  res.json({ data: { media: media }, error: null });
+app.get('/ytdl/video/:_id/:file_name', (req, res) => {
+  ytdl(req.params._id).pipe(res);
 });
 
-app.get('/ytdl/audio/:_id', (req, res) => {
-  const io = req.app.get('socketio');
-  const media = `${uuid()}.mp3`;
+app.get('/ytdl/audio/:_id/:file_name', (req, res) => {
   const ffmpeg = spawn("ffmpeg", [
         "-f",
         "mp4",
@@ -41,20 +31,9 @@ app.get('/ytdl/audio/:_id', (req, res) => {
         "pipe:"
   ]);
   ytdl(req.params._id).pipe(ffmpeg.stdin);
-  ffmpeg.stdout.pipe(fs.createWriteStream(`./public/${media}`)).on("finish", () => {
-    io.emit(`/ready/${media}`, { data: {}, error: null });
-  })
-  .on("error", (error) => {
-    io.emit(`/ready/${media}`, { data: {}, error: error.message });
-  });
-  res.json({ data: { media: media }, error: null });
+  ffmpeg.stdout.pipe(res);
 });
 
-
-const server = app.listen(process.env.PORT, () => {
-  console.log(`PORT: ${process.env.PORT}`)
-})
-
-// sockets
-const io = require('socket.io')(server);
-app.set('socketio', io);
+app.listen(process.env.PORT, () => {
+  console.log(`PORT: ${process.env.PORT}`);
+});
