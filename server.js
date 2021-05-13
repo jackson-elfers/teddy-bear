@@ -11,9 +11,6 @@ const app = express();
 
 const port = 5000
 
-app.use(express.static(path.join(process.cwd(), "./client/build")));
-app.use(express.static(path.join(process.cwd(), "./public")));
-app.use(secure);
 pingmydyno("https://jelfers.herokuapp.com");
 
 app.get('/ytdl/video/:_id/:file_name', (req, res) => {
@@ -35,5 +32,8 @@ app.get('/ytdl/audio/:_id/:file_name', (req, res) => {
 });
 
 app.listen(process.env.PORT, () => {
+  app.use(express.static(path.join(process.cwd(), "./client/build")));
+  app.use(express.static(path.join(process.cwd(), "./public")));
+  app.use(secure);
   console.log(`PORT: ${process.env.PORT}`);
 });
