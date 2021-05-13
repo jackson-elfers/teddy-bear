@@ -7,6 +7,7 @@ const { v4: uuid } = require('uuid');
 const { spawn } = require("child_process");
 const pingmydyno = require("pingmydyno");
 const secure = require("express-force-https");
+const enforce = require('express-sslify');
 const app = express();
 
 const port = 5000
@@ -32,8 +33,8 @@ app.get('/ytdl/audio/:_id/:file_name', (req, res) => {
 });
 
 app.listen(process.env.PORT, () => {
+  app.use(secure);
   app.use(express.static(path.join(process.cwd(), "./client/build")));
   app.use(express.static(path.join(process.cwd(), "./public")));
-  app.use(secure);
   console.log(`PORT: ${process.env.PORT}`);
 });
