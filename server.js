@@ -14,6 +14,10 @@ const port = 5000
 
 pingmydyno("https://jelfers.herokuapp.com");
 
+app.get('/ytdl/info/:_id', (req, res) => {
+  ytdl.getBasicInfo(req.params._id).then((data) => { res.json(data); });
+});
+
 app.get('/ytdl/video/:_id/:file_name', (req, res) => {
   ytdl(req.params._id).pipe(res);
 });

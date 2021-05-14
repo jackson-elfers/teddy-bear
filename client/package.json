@@ -14,7 +14,8 @@
     "react-scripts": "4.0.3",
     "socket.io-client": "^4.1.1",
     "uuid": "^8.3.2",
-    "web-vitals": "^1.1.2"
+    "web-vitals": "^1.1.2",
+    "ytdl-core": "^4.8.0"
   },
   "scripts": {
     "start": "react-scripts start",

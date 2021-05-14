@@ -2,8 +2,6 @@ import './styles';
 import React, { useState, useEffect, useRef } from "react";
 import axios from "axios";
 import getYouTubeID from "get-youtube-id";
-import io from "socket.io-client";
-const socket = io();
 const { v4: uuid } = require('uuid');
 const heartflakes = require('magic-heartflakes');
 heartflakes();
@@ -16,7 +14,9 @@ function Download(props) {
   async function download(e) {
     e.preventDefault();
     const form = document.getElementById(`form${id}`);
-    setData({ url: `${props.api_url}/${getYouTubeID(form.media_id.value)}/${uuid()}.${props.file_type}` });
+    const ytid = getYouTubeID(form.media_id.value);
+    const info = await axios.get(`${process.env.REACT_APP_API}/ytdl/info/${ytid}`);
+    setData({ url: `${props.api_url}/${ytid}/${info.data.videoDetails.title}.${props.file_type}` });
     setReady(true);
   }
 
