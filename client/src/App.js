@@ -15,8 +15,8 @@ function Download(props) {
     e.preventDefault();
     const form = document.getElementById(`form${id}`);
     const ytid = getYouTubeID(form.media_id.value);
-    const info = await axios.get(`${process.env.REACT_APP_API}/ytdl/info/${ytid}`);
-    setData({ url: `${props.api_url}/${ytid}/${info.data.videoDetails.title}.${props.file_type}` });
+    //const info = await axios.get(`${process.env.REACT_APP_API}/ytdl/info/${ytid}`);
+    setData({ url: `${props.api_url}/${ytid}/${ytid}.${props.file_type}` });
     setReady(true);
   }
 
